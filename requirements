@@ -1,9 +1,2 @@
 streamlit
-huggingface_hub==0.24.0
-filelock
-fsspec 
-packaging
-pyyaml 
-requests
-tqdm
-typing-extensions
+git+https://github.com/huggingface/huggingface_hub.git
