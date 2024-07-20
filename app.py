@@ -1,5 +1,5 @@
-from huggingface_hub import InferenceClient
 import streamlit as st
+from huggingface_hub import InferenceClient
 client = InferenceClient(
         "meta-llama/Meta-Llama-3-8B-Instruct",
         token="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",
