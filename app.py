@@ -3,22 +3,26 @@ from huggingface_hub import InferenceClient
 
 # Initialize the InferenceClient
 client = InferenceClient(
-    model_id="meta-llama/Meta-Llama-3-8B-Instruct",
-    token="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",
+    model="meta-llama/Meta-Llama-3-8B-Instruct",
+    token="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"
 )
 
 # Function to handle chat completion
-def chat_with_model():
-    messages = [{"role": "user", "content": "What is the capital of France?"}]
-    for message in client.chat_completion(
-        messages=messages,
-        max_tokens=500,
-        stream=True,
-    ):
-        # Streamlit component to display the streamed response
-        st.write(message['choices'][0]['delta']['content'])
+def get_chat_completion(prompt):
+        response = ""
+        for message in client.chat_completion(
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=500,
+            stream=True,
+        ):
+            response += message.choices[0].delta.content
+        return response
+user_input = st.text_input("Enter your question:")
 
-# Streamlit app layout
-st.title("Chat with Meta-Llama Model")
-if st.button("Ask"):
-    chat_with_model()
+if st.button("Get Solution"):
+        if user_input:
+            with st.spinner("Generating response..."):
+                response = get_chat_completion(user_input)
+            st.write(response)
+        else:
+            st.write("Please enter a message.")
